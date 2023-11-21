@@ -1,0 +1,52 @@
+{
+    "_id": {
+      "$oid": "573a1398f29313caabce912c"
+    },
+    "plot": "Three unemployed parapsychology professors set up shop as a unique ghost removal service.",
+    "genres": [
+      "Comedy",
+      "Fantasy"
+    ],
+    "runtime": 105,
+    "metacritic": 67,
+    "rated": "PG",
+    "cast": [
+      "Bill Murray",
+      "Dan Aykroyd",
+      "Sigourney Weaver",
+      "Harold Ramis"
+    ],
+    "num_mflix_comments": 1,
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTkxMjYyNzgwMl5BMl5BanBnXkFtZTgwMTE3MjYyMTE@._V1_SY1000_SX677_AL_.jpg",
+    "title": "Ghostbusters",
+    "fullplot": "Three odd-ball scientists get kicked out of their cushy positions at a university in New York City where they studied the occult. They decide to set up shop in an old firehouse and become Ghostbusters, trapping pesky ghosts, spirits, haunts, and poltergeists for money. They wise-crack their way through the city, and stumble upon a gateway to another dimension, one which will release untold evil upon the city. The Ghostbusters are called on to save the Big Apple.",
+    "languages": [
+      "English"
+    ],
+    "released": {
+      "$date": "1984-06-08T00:00:00.000Z"
+    },
+    "directors": [
+      "Ivan Reitman"
+    ],
+    "writers": [
+      "Dan Aykroyd",
+      "Harold Ramis"
+    ],
+    "awards": {
+      "wins": 6,
+      "nominations": 6,
+      "text": "Nominated for 2 Oscars. Another 4 wins & 6 nominations."
+    },
+    "lastupdated": "2015-09-04 00:15:08.537000000",
+    "year": 1984,
+    "imdb": {
+      "rating": 7.8,
+      "votes": 238786,
+      "id": 87332
+    },
+    "countries": [
+      "USA"
+    ],
+    "type": "movie"
+  }
