@@ -24,9 +24,7 @@ http://localhost:3002/docs
 
 ## Example output
 
-```
 The Godfather is a 1972 crime drama film directed by Francis Ford Coppola and starring Marlon Brando, Al Pacino, James Caan, and Richard S. Castellano. The movie has an IMDb rating of 9.2 out of 10 based on 1,038,358 votes and a Metacritic score of 100. It was released on March 24, 1972, and won 3 Oscars with a total of 33 wins and 19 nominations. The film's plot revolves around the aging patriarch of an organized crime dynasty transferring control of his empire to his reluctant son, leading to a series of unfortunate events and conflicts within the family. The movie is available in English, Italian, and Latin languages with subtitles. It was produced by Paramount Pictures and has a runtime of 175 minutes. The film's writers include Mario Puzo (screenplay), Francis Ford Coppola (screenplay), and Mario Puzo (novel).
-```
 
 ## Example Input
 
