@@ -1,18 +1,17 @@
 from fastapi import FastAPI
-import threading
+import json
+import requests
+import time
+
+# Load the llm config from the json file provided on command line
+with open("model.json", 'r') as file:
+    model = json.load(file)
 
 # Whip the llama into gear
-from llama_cpp import Llama
-llama_model = Llama(model_path="dolphin-2.1-mistral-7b.Q5_K_S.gguf", n_ctx=4096)
-prompt_format = "<|im_start|>system\n{system}<|im_end|>\n<|im_start|>user\n{prompt}<|im_end|>\n<|im_start|>assistant:"
 DEFAULT_SYSTEM = "You are a helpful assistant who will always answer the question with only the data provided"
-DEFAULT_PROMPT = "Describe the following {entity} data in a single paragraph, without saying it's a JSON object or including any URLs:"
+DEFAULT_PROMPT = "Entity:\n{%D}\nDescribe the {%E} in a single paragraph, without saying it's a JSON object or including any URLs or images:"
 DEFAULT_TOKENS = 512 # many words
-DEFAULT_TEMP = 0.1 # very mild temp for more boring results
-BAN_TOKEN = "<|im_end|>" 
-
-# Prevent double gen crashes
-data_lock = threading.Lock()
+DEFAULT_TEMP = 0.7 # very mild temp for more boring results
 
 # Fast API init
 app = FastAPI(
@@ -29,20 +28,40 @@ app = FastAPI(
     }
 )
 
+def remove_extra_formatting(text):
+    cleaned_text = text.replace("\n", " ") # remove newline
+    cleaned_text = cleaned_text.replace("\t", " ") # remove tabs
+    cleaned_text = cleaned_text.replace("  ", " ") # remove double spaces
+    return cleaned_text
+
 # Endpoint to compare 2 images by URL and show similarity
 @app.post("/summarize")
 async def summarize_json_data(entity_type: str, input_json: str):
 
     # Build the prompt
-    prompt = prompt_format.replace("{system}", DEFAULT_SYSTEM)
-    prompt = prompt.replace("{prompt}", DEFAULT_PROMPT + " " + input_json)
-    prompt = prompt.replace("{entity}", entity_type)
-    prompt = prompt.replace("  ", "") # Too much whitespace slows it down?
-    
-    print(prompt)
+    prompt = model["prompt_format"].replace("{%S}", DEFAULT_SYSTEM)
+    prompt = prompt.replace("{%P}", DEFAULT_PROMPT)
+    prompt = prompt.replace("{%D}", input_json)
+    prompt = prompt.replace("{%E}", entity_type)
 
-    # Call the LLM and return
-    with data_lock:
-        llm_result = llama_model(prompt, max_tokens=DEFAULT_TOKENS, temperature=DEFAULT_TEMP)["choices"][0]["text"]
-        llm_result = llm_result.replace(BAN_TOKEN, "")  # Remove any leaked control tokens
-        return llm_result
+    api_data = {
+        "prompt": prompt,
+        "n_predict": DEFAULT_TOKENS,
+        "temperature": DEFAULT_TEMP,
+        "stop": model["stop_tokens"]
+    }
+
+    # Time the process
+    start_time = time.time()
+    try:
+        # Call the model API
+        response = requests.post(model["llama_endpoint"], headers={"Content-Type": "application/json"}, json=api_data)
+        json_output = response.json()
+        end_time = time.time()
+        milliseconds_elapsed = (end_time - start_time) * 1000
+        output = {"summary": remove_extra_formatting(json_output['content']), "ms": round(milliseconds_elapsed)}
+    except:
+        output = {"error": "My AI model is not responding try again in a moment 🔥🐳"}
+
+    # remove annoying formatting in output
+    return output

@@ -4,6 +4,3 @@
 # FastAPI Stuff
 fastapi
 uvicorn
-
-# LLM model
-llama-cpp-python

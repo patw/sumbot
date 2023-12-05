@@ -9,6 +9,9 @@ __pycache__/
 # LLM Models
 *.gguf
 
+# Main config files
+model.json
+
 # Distribution / packaging
 .Python
 build/
