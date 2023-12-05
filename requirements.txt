@@ -4,3 +4,4 @@
 # FastAPI Stuff
 fastapi
 uvicorn
+requests
