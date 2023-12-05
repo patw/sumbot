@@ -17,7 +17,7 @@ DEFAULT_TEMP = 0.7 # very mild temp for more boring results
 app = FastAPI(
         title="SumBot",
         description="Send me a JSON record and say what kind of entity it is (movie, transaction, person) and I'll summarize it with an LLM",
-        version="1.0",
+        version="1.1",
         contact={
             "name": "Pat Wendorf",
             "email": "pat.wendorf@mongodb.com",
