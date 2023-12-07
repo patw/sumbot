@@ -48,7 +48,8 @@ async def summarize_json_data(entity_type: str, input_json: str):
         "prompt": prompt,
         "n_predict": DEFAULT_TOKENS,
         "temperature": DEFAULT_TEMP,
-        "stop": model["stop_tokens"]
+        "stop": model["stop_tokens"],
+        "tokens_cached": 0
     }
 
     # Time the process
