@@ -5,3 +5,6 @@
 fastapi
 uvicorn
 requests
+
+# OpenAI API
+OpenAI
