@@ -11,7 +11,9 @@ with open("model.json", 'r') as file:
 # Whip the llama into gear
 DEFAULT_SYSTEM = "You are a helpful assistant who will always answer the question with only the data provided"
 DEFAULT_PROMPT = "Entity:\n{data}\nDescribe the {entity} in a single paragraph, without saying it's a JSON object or including any URLs or images"
-DEFAULT_TEMP = 0.1 # very mild temp for more boring results
+DEFAULT_TEMP = 0.6
+DEFAULT_TOP_P = 0.9
+MAX_TOKENS = 1024
 
 # Fast API init
 app = FastAPI(
@@ -38,7 +40,7 @@ def remove_extra_formatting(text):
 def llm_local(prompt):
     client = OpenAI(api_key=llm_config["api_key"], base_url=llm_config["base_url"])
     messages=[{"role": "system", "content": DEFAULT_SYSTEM},{"role": "user", "content": prompt}]
-    response = client.chat.completions.create(model=llm_config["model"], temperature=DEFAULT_TEMP, messages=messages)
+    response = client.chat.completions.create(model=llm_config["model"], max_tokens=MAX_TOKENS, top_p=DEFAULT_TOP_P, temperature=DEFAULT_TEMP, messages=messages)
     return response.choices[0].message.content
 
 # Endpoint to summarize the input
